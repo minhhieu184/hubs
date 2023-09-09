@@ -637,6 +637,10 @@ class UIRoot extends Component {
 
     this.setState({ entered: true, entering: false, showShareDialog: false });
 
+    if (configs.isAdmin()) {
+      this.props.store.update({ preferences: { disableMovement: false } });
+    }
+
     if (this.mediaDevicesManager.isMicShared) {
       console.log(`Using microphone: ${this.mediaDevicesManager.selectedMicLabel}`);
     }
