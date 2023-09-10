@@ -182,6 +182,7 @@ AFRAME.registerComponent("media-video", {
   },
 
   play() {
+    console.log("emit hehe");
     this.el.components["listed-media"] && this.el.sceneEl.emit("listed_media_changed");
   },
 

@@ -341,11 +341,15 @@ export default class MediaDevicesManager extends EventEmitter {
   }
 
   async startVideoShare({ isDisplayMedia, target, success, error }) {
+    console.log("startVideoShare: 1");
     let newStream;
     let videoTrackAdded = false;
 
     try {
       if (isDisplayMedia) {
+        console.log("startVideoShare: 2");
+        console.log("MediaDevicesManager ~ startVideoShare ~ screen.width,screen.height:", screen.width, screen.height);
+
         newStream = await navigator.mediaDevices.getDisplayMedia({
           video: {
             // Work around BMO 1449832 by calculating the width. This will break for multi monitors if you share anything
@@ -361,6 +365,8 @@ export default class MediaDevicesManager extends EventEmitter {
           }
         });
       } else {
+        console.log("startVideoShare: 3");
+
         newStream = await navigator.mediaDevices.getUserMedia({
           video: {
             width: isIOS ? { max: 1280 } : { max: 1280, ideal: 720 },
@@ -370,8 +376,13 @@ export default class MediaDevicesManager extends EventEmitter {
         });
       }
 
+      console.log("startVideoShare: 4");
+
       const videoTracks = newStream ? newStream.getVideoTracks() : [];
+      console.log("MediaDevicesManager ~ startVideoShare ~ videoTracks:", videoTracks);
       if (videoTracks.length > 0) {
+        console.log("startVideoShare: 5");
+
         videoTrackAdded = true;
 
         newStream.getVideoTracks().forEach(track => {
@@ -395,6 +406,8 @@ export default class MediaDevicesManager extends EventEmitter {
         this.emit(MediaDevicesEvents.PERMISSIONS_STATUS_CHANGED, { mediaDevice, status: PermissionStatus.GRANTED });
       }
     } catch (e) {
+      console.log("startVideoShare: 6");
+
       error(e);
       const mediaDevice = isDisplayMedia ? MediaDevices.SCREEN : MediaDevices.CAMERA;
       this._permissionsStatus[mediaDevice] = PermissionStatus.DENIED;
@@ -403,6 +416,7 @@ export default class MediaDevicesManager extends EventEmitter {
       return;
     }
 
+    console.log("startVideoShare: 7");
     success(isDisplayMedia, videoTrackAdded, target);
   }
 

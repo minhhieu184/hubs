@@ -366,8 +366,10 @@ export default class SceneEntryManager {
     });
 
     this.scene.addEventListener("action_share_screen", () => {
+      console.log("SceneEntryManager ~ this.scene.addEventListener ~ isHandlingVideoShare:", isHandlingVideoShare);
       if (isHandlingVideoShare) return;
       isHandlingVideoShare = true;
+      console.log(" isHandlingVideoShare 2:", isHandlingVideoShare);
       this.mediaDevicesManager.startVideoShare({
         isDisplayMedia: true,
         target: null,

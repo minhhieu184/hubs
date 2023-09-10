@@ -83,6 +83,7 @@ function useShare(scene, hubChannel) {
   }, [scene, sharingSource]);
 
   const toggleShareScreen = useCallback(() => {
+    console.log("toggleShareScreen ~ sharingSource:", sharingSource);
     if (sharingSource) {
       scene.emit(MediaDevicesEvents.VIDEO_SHARE_ENDED);
     } else {
@@ -146,6 +147,7 @@ export function SharePopoverContainer({ scene, hubChannel }) {
       active: sharingSource === "camera-to-avatar"
     }
   ];
+  console.log("SharePopoverContainer ~ items:", items);
 
   return <SharePopoverButton items={items} />;
 }

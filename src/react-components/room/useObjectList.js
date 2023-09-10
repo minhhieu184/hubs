@@ -47,10 +47,14 @@ function handleInspect(scene, object, callback) {
   callback(object);
 
   if (object.el.object3D !== cameraSystem.inspectable) {
+    console.log("handleInspect 1");
     if (cameraSystem.inspectable) {
+      console.log("handleInspect 2");
       cameraSystem.uninspect(false);
     }
 
+    console.log("handleInspect 3");
+    console.log("handleInspect ~ object.el:", object.el);
     cameraSystem.inspect(object.el, 1.5, false);
   }
 }
@@ -84,6 +88,8 @@ export function ObjectListProvider({ scene, children }) {
       }));
 
       setObjects(objects);
+
+      return objects[0];
     }
 
     let timeout;
@@ -91,7 +97,13 @@ export function ObjectListProvider({ scene, children }) {
     function onListedMediaChanged() {
       // HACK: The listed-media component exists before the media-loader component does, in cases where an entity is created from a network template because of an incoming message, so don't updateMediaEntities right away.
       // Sorry in advance for the day this comment is out of date.
-      timeout = setTimeout(() => updateMediaEntities(), 0);
+      timeout = setTimeout(() => {
+        const firstObject = updateMediaEntities();
+        if (firstObject && firstObject.type === "video") {
+          handleInspect(scene, firstObject, setSelectedObject);
+          handleDeselect(scene, firstObject, setFocusedObject);
+        }
+      }, 0);
     }
 
     scene.addEventListener("listed_media_changed", onListedMediaChanged);
