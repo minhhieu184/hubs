@@ -68,7 +68,6 @@ function handleDeselect(scene, object, callback) {
 }
 
 export function ObjectListProvider({ scene, children }) {
-  console.log("ObjectListProvider ~ scene:", scene);
   const [objects, setObjects] = useState([]);
   const [focusedObject, setFocusedObject] = useState(null); // The object currently shown in the viewport
   const [selectedObject, setSelectedObject] = useState(null); // The object currently selected in the object list
@@ -163,12 +162,17 @@ export function ObjectListProvider({ scene, children }) {
 
   useEffect(() => {
     const sceneEl = document.querySelector("a-scene");
-    if (objects[0] && objects[0].type === "video" && sceneEl.is("entered")) {
-      const timeout = setTimeout(() => selectObject(objects[0]), 2000);
-      return () => {
-        clearTimeout(timeout);
-      };
+    let timeoutID;
+    if (objects[0] && objects[0].type === "video") {
+      objects[0].el.addEventListener("video-loaded", () => {
+        if (sceneEl.is("entered")) {
+          timeoutID = setTimeout(() => selectObject(objects[0]), 1000);
+        }
+      });
     }
+    return () => {
+      timeoutID && clearTimeout(timeoutID);
+    };
   }, [objects, selectObject]);
 
   const unfocusObject = useCallback(
