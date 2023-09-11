@@ -47,14 +47,10 @@ function handleInspect(scene, object, callback) {
   callback(object);
 
   if (object.el.object3D !== cameraSystem.inspectable) {
-    console.log("handleInspect 1");
     if (cameraSystem.inspectable) {
-      console.log("handleInspect 2");
       cameraSystem.uninspect(false);
     }
 
-    console.log("handleInspect 3");
-    console.log("handleInspect ~ object.el:", object.el);
     cameraSystem.inspect(object.el, 1.5, false);
   }
 }
@@ -72,6 +68,7 @@ function handleDeselect(scene, object, callback) {
 }
 
 export function ObjectListProvider({ scene, children }) {
+  console.log("ObjectListProvider ~ scene:", scene);
   const [objects, setObjects] = useState([]);
   const [focusedObject, setFocusedObject] = useState(null); // The object currently shown in the viewport
   const [selectedObject, setSelectedObject] = useState(null); // The object currently selected in the object list
@@ -88,8 +85,6 @@ export function ObjectListProvider({ scene, children }) {
       }));
 
       setObjects(objects);
-
-      return objects[0];
     }
 
     let timeout;
@@ -97,13 +92,7 @@ export function ObjectListProvider({ scene, children }) {
     function onListedMediaChanged() {
       // HACK: The listed-media component exists before the media-loader component does, in cases where an entity is created from a network template because of an incoming message, so don't updateMediaEntities right away.
       // Sorry in advance for the day this comment is out of date.
-      timeout = setTimeout(() => {
-        const firstObject = updateMediaEntities();
-        if (firstObject && firstObject.type === "video") {
-          handleInspect(scene, firstObject, setSelectedObject);
-          handleDeselect(scene, firstObject, setFocusedObject);
-        }
-      }, 0);
+      timeout = setTimeout(() => updateMediaEntities(), 0);
     }
 
     scene.addEventListener("listed_media_changed", onListedMediaChanged);
@@ -111,7 +100,7 @@ export function ObjectListProvider({ scene, children }) {
     updateMediaEntities();
 
     return () => {
-      scene.removeEventListener("listed_media_changed", updateMediaEntities);
+      scene.removeEventListener("listed_media_changed", onListedMediaChanged);
       clearTimeout(timeout);
     };
   }, [scene, setObjects]);
@@ -171,6 +160,16 @@ export function ObjectListProvider({ scene, children }) {
   );
 
   const focusObject = useCallback(object => handleInspect(scene, object, setFocusedObject), [scene, setFocusedObject]);
+
+  useEffect(() => {
+    const sceneEl = document.querySelector("a-scene");
+    if (objects[0] && objects[0].type === "video" && sceneEl.is("entered")) {
+      const timeout = setTimeout(() => selectObject(objects[0]), 2000);
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [objects, selectObject]);
 
   const unfocusObject = useCallback(
     () => handleDeselect(scene, selectedObject, setFocusedObject),
