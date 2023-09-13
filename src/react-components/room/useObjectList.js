@@ -56,8 +56,6 @@ function handleInspect(scene, object, callback) {
 }
 
 function handleDeselect(scene, object, callback) {
-  console.trace("xxxxx");
-
   const cameraSystem = scene.systems["hubs-systems"].cameraSystem;
 
   callback(null);

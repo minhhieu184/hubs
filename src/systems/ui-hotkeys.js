@@ -32,6 +32,7 @@ AFRAME.registerSystem("ui-hotkeys", {
     }
 
     if (this.userinput.get(paths.actions.mediaExit)) {
+      console.log("press esc");
       const state = window.APP.history.location.state && window.APP.history.location.state.value;
       const ignoredStates = new Set(["avatar-editor", "link", "profile", "device", "audio"]);
       const maybeInMediaBrowser = !state || !ignoredStates.has(state);

@@ -8,6 +8,7 @@ import { qsGet } from "../utils/qs_truthy";
 const customFOV = qsGet("fov");
 const enableThirdPersonMode = qsTruthy("thirdPerson");
 import { Layers } from "../camera-layers";
+import configs from "../utils/configs";
 
 function getInspectableInHierarchy(el) {
   let inspectable = el;
@@ -307,7 +308,7 @@ export class CameraSystem {
   }
 
   uninspect(fireChangeEvent = true) {
-    console.log("uninspect");
+    console.trace("uninspect");
     if (this.mode !== CAMERA_MODE_INSPECT) return;
     const scene = AFRAME.scenes[0];
     if (scene.is("entered")) {
@@ -431,8 +432,12 @@ export class CameraSystem {
           this.inspect(hoverEl, 1.5);
         }
       } else if (this.mode === CAMERA_MODE_INSPECT && this.userinput.get(paths.actions.stopInspecting)) {
-        scene.emit("uninspect");
-        this.uninspect();
+        const firstMediaEl = scene.systems["listed-media"].els[0];
+        const isMediaVideoEl = !!(firstMediaEl && firstMediaEl.components["media-video"]);
+        if (!isMediaVideoEl || configs.isAdmin()) {
+          scene.emit("uninspect");
+          this.uninspect();
+        }
       }
 
       if (this.userinput.get(paths.actions.nextCameraMode)) {

@@ -649,7 +649,12 @@ class UIRoot extends Component {
     if (this.mediaDevicesManager.isVideoShared) {
       console.log("Screen sharing enabled.");
     }
-    this.props.scene.systems["listed-media"].els[0].emit("video-loaded");
+
+    const firstMediaEl = this.props.scene.systems["listed-media"].els[0];
+    const isMediaVideoEl = !!(firstMediaEl && firstMediaEl.components["media-video"]);
+    if (isMediaVideoEl) {
+      firstMediaEl.emit("video-loaded");
+    }
   };
 
   attemptLink = async () => {
