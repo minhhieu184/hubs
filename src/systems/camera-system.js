@@ -307,6 +307,7 @@ export class CameraSystem {
   }
 
   uninspect(fireChangeEvent = true) {
+    console.log("uninspect");
     if (this.mode !== CAMERA_MODE_INSPECT) return;
     const scene = AFRAME.scenes[0];
     if (scene.is("entered")) {

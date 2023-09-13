@@ -56,6 +56,8 @@ function handleInspect(scene, object, callback) {
 }
 
 function handleDeselect(scene, object, callback) {
+  console.trace("xxxxx");
+
   const cameraSystem = scene.systems["hubs-systems"].cameraSystem;
 
   callback(null);
@@ -165,6 +167,7 @@ export function ObjectListProvider({ scene, children }) {
     let timeoutID;
     if (objects[0] && objects[0].type === "video") {
       objects[0].el.addEventListener("video-loaded", () => {
+        console.log("listen video-loaded");
         if (sceneEl.is("entered")) {
           timeoutID = setTimeout(() => selectObject(objects[0]), 1000);
         }

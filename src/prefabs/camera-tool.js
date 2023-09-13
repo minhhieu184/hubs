@@ -14,8 +14,8 @@ export function Label({ text = {}, ...props }, ...children) {
   return <entity name="Label" text={{ value, ...text }} layers={1 << Layers.CAMERA_LAYER_UI} {...props} />;
 }
 
-const RENDER_WIDTH = 1280;
-const RENDER_HEIGHT = 720;
+const RENDER_WIDTH = 1920;
+const RENDER_HEIGHT = 1080;
 
 // We intentionally do not remove this model from the GLTF Cache
 preload(loadModel(cameraModelSrc, null, true));
@@ -36,7 +36,7 @@ export function CameraPrefab() {
 
   const screenMaterial = new THREE.MeshBasicMaterial({ toneMapped: false });
   const width = 0.28;
-  const aspect = 1280 / 720;
+  const aspect = 1920 / 1080;
   const screenGeometry = new THREE.PlaneBufferGeometry(width, width / aspect);
 
   const camera = new THREE.PerspectiveCamera(50, RENDER_WIDTH / RENDER_HEIGHT, 0.1, 30000);

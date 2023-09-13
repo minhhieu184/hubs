@@ -633,6 +633,7 @@ class UIRoot extends Component {
     clearHistoryState(this.props.history);
 
     const muteOnEntry = this.props.store.state.preferences.muteMicOnEntry;
+    console.log("enter scene");
     await this.props.enterScene(this.state.enterInVR, muteOnEntry);
 
     this.setState({ entered: true, entering: false, showShareDialog: false });
@@ -648,6 +649,7 @@ class UIRoot extends Component {
     if (this.mediaDevicesManager.isVideoShared) {
       console.log("Screen sharing enabled.");
     }
+    this.props.scene.systems["listed-media"].els[0].emit("video-loaded");
   };
 
   attemptLink = async () => {

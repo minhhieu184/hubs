@@ -367,6 +367,7 @@ AFRAME.registerComponent("media-loader", {
       if (this.data.resolve && !src.startsWith("data:") && !src.startsWith("hubs:") && !isLocalModelAsset) {
         const is360 = !!(this.data.mediaOptions.projection && this.data.mediaOptions.projection.startsWith("360"));
         const quality = getDefaultResolveQuality(is360);
+        console.log("update ~ src, quality, version, forceLocalRefresh:", src, quality, version, forceLocalRefresh);
         const result = await resolveUrl(src, quality, version, forceLocalRefresh);
         canonicalUrl = result.origin;
 

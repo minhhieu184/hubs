@@ -110,9 +110,9 @@ class AvatarPreview extends Component {
     const clock = new THREE.Clock();
 
     this.snapshotCanvas = document.createElement("canvas");
-    this.snapshotCanvas.width = 720;
-    this.snapshotCanvas.height = 1280;
-    this.snapshotCamera = new THREE.PerspectiveCamera(55, 720 / 1280, 0.1, 1000);
+    this.snapshotCanvas.width = 1920;
+    this.snapshotCanvas.height = 1080;
+    this.snapshotCamera = new THREE.PerspectiveCamera(55, 1080 / 1920, 0.1, 1000);
     this.snapshotCamera.matrixAutoUpdate = true;
     this.snapshotRenderer = createRenderer(this.snapshotCanvas, true, false);
     this.snapshotRenderer.setClearAlpha(0);

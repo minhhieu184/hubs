@@ -28,8 +28,10 @@ const videoMimeType = videoCodec ? `video/webm; codecs=${videoCodec}` : null;
 const hasWebGL2 = !!document.createElement("canvas").getContext("webgl2");
 const allowVideo = !!videoMimeType && hasWebGL2;
 
-const RENDER_WIDTH = 1280;
-const RENDER_HEIGHT = 720;
+// const RENDER_WIDTH = 1280;
+// const RENDER_HEIGHT = 720;
+const RENDER_WIDTH = 1920;
+const RENDER_HEIGHT = 1080;
 
 const isMobileVR = AFRAME.utils.device.isMobileVR();
 const isOculusBrowser = navigator.userAgent.match(/Oculus/);
@@ -37,7 +39,8 @@ const isOculusBrowser = navigator.userAgent.match(/Oculus/);
 const CAPTURE_WIDTH = isMobileVR && !isOculusBrowser ? 640 : 1280;
 const CAPTURE_HEIGHT = isMobileVR && !isOculusBrowser ? 360 : 720;
 
-const VIDEO_FPS = 25;
+// const VIDEO_FPS = 25;
+const VIDEO_FPS = 60;
 const VIEWFINDER_UPDATE_RATE = 1000 / 6;
 const VIDEO_UPDATE_RATE = 1000 / VIDEO_FPS;
 
