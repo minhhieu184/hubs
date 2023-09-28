@@ -563,8 +563,10 @@ function handleHubChannelJoined(entryManager, hubChannel, messageDispatch, data)
     messageDispatch: messageDispatch,
     onSendMessage: messageDispatch.dispatch,
     onLoaded: () => store.executeOnLoadActions(scene),
-    onMediaSearchResultEntrySelected: (entry, selectAction) =>
-      scene.emit("action_selected_media_result_entry", { entry, selectAction }),
+    onMediaSearchResultEntrySelected: (entry, selectAction) => {
+      console.log("handleHubChannelJoined ~ selectAction:", selectAction);
+      scene.emit("action_selected_media_result_entry", { entry, selectAction });
+    },
     onMediaSearchCancelled: entry => scene.emit("action_media_search_cancelled", entry),
     onAvatarSaved: entry => scene.emit("action_avatar_saved", entry)
   });
@@ -772,6 +774,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   APP.mediaDevicesManager = new MediaDevicesManager(scene, store, audioSystem);
 
   const performConditionalSignIn = async (predicate, action, signInMessage, onFailure) => {
+    console.log("sdgiuhiuf");
     if (predicate()) return action();
 
     await handleExitTo2DInterstitial(true, () => remountUI({ showSignInDialog: false }));
@@ -1256,6 +1259,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   hubPhxChannel
     .join()
     .receive("ok", async data => {
+      console.log("document.addEventListener ~ data:", data);
+
       setLocalClientID(data.session_id);
       APP.hideHubPresenceEvents = true;
       presenceSync.promise = new Promise(resolve => {

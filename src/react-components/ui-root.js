@@ -108,6 +108,17 @@ const LOBBY_MODAL_ROUTER_PATHS = ["/media/scenes", "/media/avatars", "/media/fav
 const LOBBY_MODAL_QUERY_VARS = ["media_source"];
 const LOBBY_MODAL_QUERY_VALUES = ["scenes", "avatars", "favorites"];
 
+function setTodefaultScene(scene) {
+  scene.emit("action_selected_media_result_entry", {
+    entry: {
+      id: "hHMUETc",
+      type: "scene_listing",
+      url: "https://solashi-hub.com/scenes/hHMUETc/solashi-class"
+    },
+    selectAction: "use"
+  });
+}
+
 async function grantedMicLabels() {
   const mediaDevices = await navigator.mediaDevices.enumerateDevices();
   return mediaDevices.filter(d => d.label && d.kind === "audioinput").map(d => d.label);
@@ -471,6 +482,10 @@ class UIRoot extends Component {
     console.log("UI root loading has finished");
     this.setState({ noMoreLoadingUpdates: true });
     this.props.scene.emit("loading_finished");
+
+    console.log("UIRoot ~ this.props.hub:", this.props.hub);
+    const { member_count, lobby_count } = this.props.hub;
+    if (member_count + lobby_count === 0) setTodefaultScene(this.props.scene);
 
     if (this.props.onLoaded) {
       this.props.onLoaded();

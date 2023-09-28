@@ -121,6 +121,7 @@ CreateTile.propTypes = {
 };
 
 export function MediaTile({ entry, processThumbnailUrl, onClick, onEdit, onShowSimilar, onCopy, onInfo, ...rest }) {
+  console.log("MediaTile ~ entry:", entry);
   const intl = useIntl();
   const creator = entry.attributions && entry.attributions.creator;
   const publisherName =

@@ -227,6 +227,7 @@ class MediaBrowserContainer extends Component {
   };
 
   handleEntryClicked = (evt, entry) => {
+    console.log("MediaBrowserContainer ~ entry:", entry);
     evt.preventDefault();
 
     if (!entry.lucky_query) {
@@ -256,6 +257,7 @@ class MediaBrowserContainer extends Component {
   };
 
   handleFacetClicked = facet => {
+    console.log("MediaBrowserContainer ~ facet:", facet);
     this.setState({ query: "" }, () => {
       const searchParams = this.getSearchClearedSearchParams(true, true, true);
 
@@ -358,6 +360,7 @@ class MediaBrowserContainer extends Component {
     const showCustomOption =
       !isFavorites && (!isSceneApiType || this.props.hubChannel.canOrWillIfCreator("update_hub"));
     const entries = (this.state.result && this.state.result.entries) || [];
+    console.log("MediaBrowserContainer ~ render ~ entries:", entries);
     const hideSearch = urlSource === "favorites";
     const showEmptyStringOnNoResult = urlSource !== "avatars" && urlSource !== "scenes";
 
