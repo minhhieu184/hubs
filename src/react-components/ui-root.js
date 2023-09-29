@@ -1398,6 +1398,11 @@ class UIRoot extends Component {
                 streaming={streaming}
                 viewport={
                   <>
+                    {/* <iframe
+                      style="height: 150px; width: 200px"
+                      src="https://learner.manabie.net/"
+                      title="manabie"
+                    ></iframe> */}
                     {!this.state.dialog && renderEntryFlow ? entryDialog : undefined}
                     {!this.props.selectedObject && <CompactMoreMenuButton />}
                     {(!this.props.selectedObject ||
@@ -1613,6 +1618,7 @@ class UIRoot extends Component {
                     )}
                     {entered && (
                       <>
+                        <button onClick={() => console.log(123)}>456456</button>
                         <AudioPopoverContainer scene={this.props.scene} />
                         <SharePopoverContainer scene={this.props.scene} hubChannel={this.props.hubChannel} />
                         <PlacePopoverContainer
