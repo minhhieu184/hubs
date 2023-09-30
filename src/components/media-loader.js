@@ -367,8 +367,9 @@ AFRAME.registerComponent("media-loader", {
       if (this.data.resolve && !src.startsWith("data:") && !src.startsWith("hubs:") && !isLocalModelAsset) {
         const is360 = !!(this.data.mediaOptions.projection && this.data.mediaOptions.projection.startsWith("360"));
         const quality = getDefaultResolveQuality(is360);
-        console.log("update ~ src, quality, version, forceLocalRefresh:", src, quality, version, forceLocalRefresh);
+        // console.log("update ~ src, quality, version, forceLocalRefresh:", src, quality, version, forceLocalRefresh);
         const result = await resolveUrl(src, quality, version, forceLocalRefresh);
+        console.log("update ~ result:", result);
         canonicalUrl = result.origin;
 
         // handle protocol relative urls
@@ -387,6 +388,10 @@ AFRAME.registerComponent("media-loader", {
 
       // todo: we don't need to proxy for many things if the canonical URL has permissive CORS headers
       accessibleUrl = proxiedUrlFor(canonicalUrl);
+      console.log("update ~ accessibleUrl:", accessibleUrl);
+      console.log("update ~ this.data:", this.data);
+      console.log("update ~ canonicalUrl:", canonicalUrl);
+      console.log("update ~ contentType:", contentType);
 
       // if the component creator didn't know the content type, we didn't get it from reticulum, and
       // we don't think we can infer it from the extension, we need to make a HEAD request to find it out

@@ -165,17 +165,24 @@ export function ObjectListProvider({ scene, children }) {
   useEffect(() => {
     const sceneEl = document.querySelector("a-scene");
     let timeoutID;
-    if (objects[0] && objects[0].type === "video") {
-      objects[0].el.addEventListener("video-loaded", () => {
-        console.log("listen video-loaded");
-        if (sceneEl.is("entered")) {
-          timeoutID = setTimeout(() => selectObject(objects[0]), 1000);
-        }
-      });
-    }
-    return () => {
-      timeoutID && clearTimeout(timeoutID);
+
+    const shareScreenObject = objects.find(
+      o => o.type === "video" && o.el.components["media-video"].data.contentType.endsWith("hubs-webrtc")
+    );
+    console.log("useEffect ~ shareScreenObject:", shareScreenObject);
+    const forceSelectObject = () => {
+      console.log("listen video-loaded");
+      if (sceneEl.is("entered")) {
+        timeoutID = setTimeout(() => selectObject(shareScreenObject), 1000);
+      }
     };
+    if (shareScreenObject) {
+      shareScreenObject.el.addEventListener("video-loaded", forceSelectObject);
+      return () => {
+        timeoutID && clearTimeout(timeoutID);
+        shareScreenObject.el.removeEventListener("video-loaded", forceSelectObject);
+      };
+    }
   }, [objects, selectObject]);
 
   const unfocusObject = useCallback(

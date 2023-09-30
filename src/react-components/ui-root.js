@@ -108,7 +108,7 @@ const LOBBY_MODAL_ROUTER_PATHS = ["/media/scenes", "/media/avatars", "/media/fav
 const LOBBY_MODAL_QUERY_VARS = ["media_source"];
 const LOBBY_MODAL_QUERY_VALUES = ["scenes", "avatars", "favorites"];
 
-function setTodefaultScene(scene) {
+function setToDefaultScene(scene) {
   scene.emit("action_selected_media_result_entry", {
     entry: {
       id: "hHMUETc",
@@ -485,7 +485,7 @@ class UIRoot extends Component {
 
     console.log("UIRoot ~ this.props.hub:", this.props.hub);
     const { member_count, lobby_count } = this.props.hub;
-    if (member_count + lobby_count === 0) setTodefaultScene(this.props.scene);
+    if (member_count + lobby_count === 0) setToDefaultScene(this.props.scene);
 
     if (this.props.onLoaded) {
       this.props.onLoaded();
@@ -663,12 +663,6 @@ class UIRoot extends Component {
 
     if (this.mediaDevicesManager.isVideoShared) {
       console.log("Screen sharing enabled.");
-    }
-
-    const firstMediaEl = this.props.scene.systems["listed-media"].els[0];
-    const isMediaVideoEl = !!(firstMediaEl && firstMediaEl.components["media-video"]);
-    if (isMediaVideoEl) {
-      firstMediaEl.emit("video-loaded");
     }
   };
 

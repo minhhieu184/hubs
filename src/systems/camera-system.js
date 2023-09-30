@@ -308,7 +308,7 @@ export class CameraSystem {
   }
 
   uninspect(fireChangeEvent = true) {
-    console.trace("uninspect");
+    console.log("uninspect");
     if (this.mode !== CAMERA_MODE_INSPECT) return;
     const scene = AFRAME.scenes[0];
     if (scene.is("entered")) {
@@ -432,9 +432,10 @@ export class CameraSystem {
           this.inspect(hoverEl, 1.5);
         }
       } else if (this.mode === CAMERA_MODE_INSPECT && this.userinput.get(paths.actions.stopInspecting)) {
-        const firstMediaEl = scene.systems["listed-media"].els[0];
-        const isMediaVideoEl = !!(firstMediaEl && firstMediaEl.components["media-video"]);
-        if (!isMediaVideoEl || configs.isAdmin()) {
+        const shareScreenObject = scene.systems["listed-media"].els.find(el =>
+          el.components["media-video"]?.data.contentType.endsWith("hubs-webrtc")
+        );
+        if (!shareScreenObject || configs.isAdmin()) {
           scene.emit("uninspect");
           this.uninspect();
         }
