@@ -4,7 +4,6 @@ import { RoomLayout } from "../layout/RoomLayout";
 import { useResizeViewport } from "./useResizeViewport";
 
 export function RoomLayoutContainer({ store, scene, ...rest }) {
-  console.log("RoomLayoutContainer ~ rest:", rest);
   const viewportRef = useRef();
 
   useResizeViewport(viewportRef, store, scene);

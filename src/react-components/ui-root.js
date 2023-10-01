@@ -98,6 +98,8 @@ import { TERMS, PRIVACY } from "../constants";
 import { ECSDebugSidebarContainer } from "./debug-panel/ECSSidebar";
 import { NotificationsContainer } from "./room/NotificationsContainer";
 import { usePermissions } from "./room/usePermissions";
+import { BrowserModalButton } from "./room/BrowserModalButton";
+import { BrowserModal } from "./room/BrowserModal";
 
 const avatarEditorDebug = qsTruthy("avatarEditorDebug");
 
@@ -214,7 +216,9 @@ class UIRoot extends Component {
     sidebarId: null,
     presenceCount: 0,
     chatPrefix: "",
-    chatAutofocus: false
+    chatAutofocus: false,
+
+    visibleBrowser: false
   };
 
   constructor(props) {
@@ -692,6 +696,8 @@ class UIRoot extends Component {
       showFullScreenIfWasFullScreen();
     }
   };
+
+  toggleBrowser = () => this.setState(({ visibleBrowser }) => ({ visibleBrowser: !visibleBrowser }));
 
   showNonHistoriedDialog = (DialogClass, props = {}) => {
     this.setState({
@@ -1398,11 +1404,7 @@ class UIRoot extends Component {
                 streaming={streaming}
                 viewport={
                   <>
-                    {/* <iframe
-                      style="height: 150px; width: 200px"
-                      src="https://learner.manabie.net/"
-                      title="manabie"
-                    ></iframe> */}
+                    <BrowserModal visible={this.state.visibleBrowser} onClose={this.toggleBrowser} />
                     {!this.state.dialog && renderEntryFlow ? entryDialog : undefined}
                     {!this.props.selectedObject && <CompactMoreMenuButton />}
                     {(!this.props.selectedObject ||
@@ -1618,7 +1620,6 @@ class UIRoot extends Component {
                     )}
                     {entered && (
                       <>
-                        <button onClick={() => console.log(123)}>456456</button>
                         <AudioPopoverContainer scene={this.props.scene} />
                         <SharePopoverContainer scene={this.props.scene} hubChannel={this.props.hubChannel} />
                         <PlacePopoverContainer
@@ -1633,6 +1634,7 @@ class UIRoot extends Component {
                             initialPresence={getPresenceProfileForSession(this.props.presences, this.props.sessionId)}
                           />
                         )}
+                        <BrowserModalButton visible={this.state.visibleBrowser} toggle={this.toggleBrowser} />
                       </>
                     )}
                     <ChatToolbarButtonContainer

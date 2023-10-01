@@ -1,0 +1,9 @@
+@use "../styles/theme.scss";
+
+:local(.browser-modal) {
+  max-width: 9999px;
+}
+
+:local(.hide) {
+  display: none;
+}

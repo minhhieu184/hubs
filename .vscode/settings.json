@@ -9,5 +9,6 @@
   "prettier.eslintIntegration": true,
   // Enable eslint for JavaScript files.
   "eslint.enable": true,
-  "cSpell.words": ["mpegurl", "proxied", "uninspect", "userinput", "webrtc"]
+  "cSpell.words": ["mpegurl", "proxied", "uninspect", "userinput", "webrtc"],
+  "liveServer.settings.port": 5501
 }
