@@ -1410,7 +1410,11 @@ class UIRoot extends Component {
                 viewport={
                   <>
                     <BrowserModal visible={this.state.visibleBrowser} onClose={this.toggleBrowser} />
-                    <QuestionModal visible={this.state.visibleQuestion} onClose={this.toggleQuestion} />
+                    <QuestionModal
+                      hubChannel={this.props.hubChannel}
+                      visible={this.state.visibleQuestion}
+                      onClose={this.toggleQuestion}
+                    />
                     {!this.state.dialog && renderEntryFlow ? entryDialog : undefined}
                     {!this.props.selectedObject && <CompactMoreMenuButton />}
                     {(!this.props.selectedObject ||
