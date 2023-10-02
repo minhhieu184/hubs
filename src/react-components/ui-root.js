@@ -100,6 +100,8 @@ import { NotificationsContainer } from "./room/NotificationsContainer";
 import { usePermissions } from "./room/usePermissions";
 import { BrowserModalButton } from "./room/BrowserModalButton";
 import { BrowserModal } from "./room/BrowserModal";
+import { QuestionModalButton } from "./room/QuestionModalButton";
+import { QuestionModal } from "./room/QuestionModal";
 
 const avatarEditorDebug = qsTruthy("avatarEditorDebug");
 
@@ -218,7 +220,8 @@ class UIRoot extends Component {
     chatPrefix: "",
     chatAutofocus: false,
 
-    visibleBrowser: false
+    visibleBrowser: false,
+    visibleQuestion: false
   };
 
   constructor(props) {
@@ -698,6 +701,8 @@ class UIRoot extends Component {
   };
 
   toggleBrowser = () => this.setState(({ visibleBrowser }) => ({ visibleBrowser: !visibleBrowser }));
+
+  toggleQuestion = () => this.setState(({ visibleQuestion }) => ({ visibleQuestion: !visibleQuestion }));
 
   showNonHistoriedDialog = (DialogClass, props = {}) => {
     this.setState({
@@ -1405,6 +1410,7 @@ class UIRoot extends Component {
                 viewport={
                   <>
                     <BrowserModal visible={this.state.visibleBrowser} onClose={this.toggleBrowser} />
+                    <QuestionModal visible={this.state.visibleQuestion} onClose={this.toggleQuestion} />
                     {!this.state.dialog && renderEntryFlow ? entryDialog : undefined}
                     {!this.props.selectedObject && <CompactMoreMenuButton />}
                     {(!this.props.selectedObject ||
@@ -1635,6 +1641,7 @@ class UIRoot extends Component {
                           />
                         )}
                         <BrowserModalButton visible={this.state.visibleBrowser} toggle={this.toggleBrowser} />
+                        <QuestionModalButton visible={this.state.visibleQuestion} toggle={this.toggleQuestion} />
                       </>
                     )}
                     <ChatToolbarButtonContainer

@@ -45,7 +45,7 @@ export const BrowserModal = ({ visible, onClose }) => {
     >
       <iframe
         name="browserFrame"
-        style={{ height: "900px", width: "100%" }}
+        style={{ height: "800px", width: "100%" }}
         src="https://learner.manabie.net/"
         title="Browser"
       ></iframe>
