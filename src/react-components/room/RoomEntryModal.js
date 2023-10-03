@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Modal } from "../modal/Modal";
@@ -13,7 +13,6 @@ import { useCssBreakpoints } from "react-use-css-breakpoints";
 import { Column } from "../layout/Column";
 import { AppLogo } from "../misc/AppLogo";
 import { FormattedMessage } from "react-intl";
-import { socket } from "../socket";
 
 export function RoomEntryModal({
   className,
@@ -29,42 +28,8 @@ export function RoomEntryModal({
   ...rest
 }) {
   const breakpoint = useCssBreakpoints();
-  const [isConnected, setIsConnected] = useState(socket.connected);
-  const [fooEvents, setFooEvents] = useState([]);
-
-  useEffect(() => {
-    function onConnect() {
-      setIsConnected(true);
-    }
-
-    function onDisconnect() {
-      setIsConnected(false);
-    }
-
-    function onFooEvent(value) {
-      setFooEvents(previous => [...previous, value]);
-    }
-
-    socket.on("connect", onConnect);
-    socket.on("disconnect", onDisconnect);
-    socket.on("foo", onFooEvent);
-
-    return () => {
-      socket.off("connect", onConnect);
-      socket.off("disconnect", onDisconnect);
-      socket.off("foo", onFooEvent);
-    };
-  }, []);
-
   return (
     <Modal className={classNames(styles.roomEntryModal, className)} disableFullscreen {...rest}>
-      <button
-        onClick={() => {
-          socket.emit("foo", "bar");
-        }}
-      >
-        123123
-      </button>
       <Column center className={styles.content}>
         {breakpoint !== "sm" && breakpoint !== "md" && (
           <div className={styles.logoContainer}>

@@ -1415,6 +1415,8 @@ class UIRoot extends Component {
                       visible={this.state.visibleQuestion}
                       onClose={this.toggleQuestion}
                     />
+                    {/* {entered && <QuestionModal store={this.props.store} hubChannel={this.props.hubChannel} />} */}
+
                     {!this.state.dialog && renderEntryFlow ? entryDialog : undefined}
                     {!this.props.selectedObject && <CompactMoreMenuButton />}
                     {(!this.props.selectedObject ||
@@ -1645,7 +1647,7 @@ class UIRoot extends Component {
                           />
                         )}
                         <BrowserModalButton visible={this.state.visibleBrowser} toggle={this.toggleBrowser} />
-                        <QuestionModalButton visible={this.state.visibleQuestion} toggle={this.toggleQuestion} />
+                        <QuestionModalButton hubChannel={this.props.hubChannel} toggle={this.toggleQuestion} />
                       </>
                     )}
                     <ChatToolbarButtonContainer

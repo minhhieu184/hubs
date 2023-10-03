@@ -1,9 +1,9 @@
 @use "../styles/theme.scss";
 
 :local(.question-modal) {
-  max-width: 9999px;
+  max-width: 1200px;
   width: fit-content;
-  min-width: 600px;
+  min-width: 900px;
 }
 
 :local(.hide) {
@@ -14,21 +14,30 @@
   overflow-y: unset;
 }
 
+:local(.question-result) {
+  display: flex;
+  flex: 0 1 auto;
+  justify-content: space-between;
+}
+
+:local(.question-result > span) {
+  display: block;
+  width: 100px;
+}
+
 :local(.question-item) {
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   flex: 0 1 auto;
 }
 
 :local(.question-item > div) {
   display: flex;
   justify-content: space-around;
-  width: 30%;
+  width: 500px;
 }
 
 :local(.question-item > p) {
-  width: 70%;
   padding-right: 12px;
   overflow: hidden;
 }
