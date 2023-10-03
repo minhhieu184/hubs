@@ -9,6 +9,7 @@ import { Button } from "../input/Button";
 import { useForm } from "react-hook-form";
 import { socket } from "../socket";
 import { FormattedMessage } from "react-intl";
+import { BackButton } from "../input/BackButton";
 
 // 5 english questions
 const _questions = [
@@ -114,7 +115,7 @@ const QuestionList = ({ roomId, questions }) => {
   if (selectedResult !== -1)
     return (
       <div style={{ padding: "16px 24px" }}>
-        <CloseButton onClick={() => setSelectedResult(-1)} />
+        <BackButton onClick={() => setSelectedResult(-1)} style={{ marginBottom: "16px" }} />
         {Object.entries(questions[selectedResult].answers).map(([key, value]) => (
           <div key={key} className={classNames(styles.questionResult)}>
             <p>{key}</p>
@@ -187,7 +188,9 @@ const AnswerQuestion = ({ assignQuestion, memberId, roomId }) => {
             <label htmlFor={index}>{option}</label>
           </div>
         ))}
-        <Button onClick={handleSubmit(onSubmit)}>1Submit</Button>
+        <Button onClick={handleSubmit(onSubmit)} preset="accept">
+          <FormattedMessage id="1Submit" defaultMessage="Submit" />
+        </Button>
       </form>
       {currentAnswerText}
     </div>
@@ -200,7 +203,7 @@ AnswerQuestion.propTypes = {
   roomId: PropTypes.string
 };
 
-export const QuestionModal = ({ store, hubChannel }) => {
+export const QuestionModal = ({ store, hubChannel, visible, onClose }) => {
   const isCreator = hubChannel.canOrWillIfCreator("update_hub");
 
   const memberId = store.state.credentials.email || store.state.profile.displayName;
@@ -208,7 +211,6 @@ export const QuestionModal = ({ store, hubChannel }) => {
 
   const [assignQuestion, setAssignQuestion] = useState(null);
   const [questions, setQuestions] = useState(_questions);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -220,14 +222,12 @@ export const QuestionModal = ({ store, hubChannel }) => {
     function onStartQuestion(payload) {
       console.log("socket.on ~ payload:", payload);
       setAssignQuestion(payload);
-      setVisible(true);
     }
     socket.on("startQuestion", onStartQuestion);
 
     function onStopQuestion(payload) {
       console.log("socket.on ~ payload:", payload);
       setAssignQuestion(null);
-      setVisible(false);
     }
     socket.on("stopQuestion", onStopQuestion);
 
@@ -252,7 +252,7 @@ export const QuestionModal = ({ store, hubChannel }) => {
       socket.off("stopQuestion", onStopQuestion);
       isCreator && socket.off("answerQuestion", onAnswerQuestion);
     };
-  }, [roomId, isCreator, setVisible]);
+  }, [roomId, isCreator]);
 
   useEffect(() => {
     function onStartingQuestion() {
@@ -269,20 +269,26 @@ export const QuestionModal = ({ store, hubChannel }) => {
     return;
   }, [isCreator, questions, roomId]);
 
-  if (!visible) return null;
-
-  return (
-    <Modal titleNode={"Question"} className={classNames(styles.questionModal, visible || styles.hide)}>
-      {isCreator ? (
-        <QuestionList roomId={roomId} questions={questions} />
-      ) : (
+  if (!isCreator)
+    return (
+      <Modal titleNode={"Question"} className={classNames(styles.questionModal, assignQuestion || styles.hide)}>
         <AnswerQuestion assignQuestion={assignQuestion} memberId={memberId} roomId={roomId} />
-      )}
+      </Modal>
+    );
+  return (
+    <Modal
+      titleNode={"Question"}
+      beforeTitle={<CloseButton onClick={onClose} />}
+      className={classNames(styles.questionModal, visible || styles.hide)}
+    >
+      <QuestionList roomId={roomId} questions={questions} />
     </Modal>
   );
 };
 
 QuestionModal.propTypes = {
   hubChannel: PropTypes.object.isRequired,
-  store: PropTypes.object.isRequired
+  store: PropTypes.object.isRequired,
+  visible: PropTypes.bool,
+  onClose: PropTypes.func
 };

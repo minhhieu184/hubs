@@ -700,9 +700,11 @@ class UIRoot extends Component {
     }
   };
 
-  toggleBrowser = () => this.setState(({ visibleBrowser }) => ({ visibleBrowser: !visibleBrowser }));
+  toggleBrowser = () =>
+    this.setState(({ visibleBrowser }) => ({ visibleBrowser: !visibleBrowser, visibleQuestion: false }));
 
-  toggleQuestion = () => this.setState(({ visibleQuestion }) => ({ visibleQuestion: !visibleQuestion }));
+  toggleQuestion = () =>
+    this.setState(({ visibleQuestion }) => ({ visibleQuestion: !visibleQuestion, visibleBrowser: false }));
 
   showNonHistoriedDialog = (DialogClass, props = {}) => {
     this.setState({
@@ -1410,13 +1412,14 @@ class UIRoot extends Component {
                 viewport={
                   <>
                     <BrowserModal visible={this.state.visibleBrowser} onClose={this.toggleBrowser} />
-                    <QuestionModal
-                      hubChannel={this.props.hubChannel}
-                      visible={this.state.visibleQuestion}
-                      onClose={this.toggleQuestion}
-                    />
-                    {/* {entered && <QuestionModal store={this.props.store} hubChannel={this.props.hubChannel} />} */}
-
+                    {entered && (
+                      <QuestionModal
+                        store={this.props.store}
+                        hubChannel={this.props.hubChannel}
+                        visible={this.state.visibleQuestion}
+                        onClose={this.toggleQuestion}
+                      />
+                    )}
                     {!this.state.dialog && renderEntryFlow ? entryDialog : undefined}
                     {!this.props.selectedObject && <CompactMoreMenuButton />}
                     {(!this.props.selectedObject ||
