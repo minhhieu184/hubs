@@ -4,7 +4,7 @@ import { ReactComponent as ShareIcon } from "../icons/Share.svg";
 import PropTypes from "prop-types";
 
 export const QuestionModalButton = ({ visible, toggle, hubChannel }) => {
-  const title = "Question";
+  const title = "Quizz";
 
   const isCreator = hubChannel.canOrWillIfCreator("update_hub");
 

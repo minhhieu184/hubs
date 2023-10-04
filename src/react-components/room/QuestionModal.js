@@ -266,8 +266,16 @@ export const QuestionModal = ({ store, hubChannel, visible, onClose }) => {
     if (isCreator) {
       socket.on("startingQuestion", onStartingQuestion);
     }
-    return;
+    return () => {
+      if (isCreator) {
+        socket.off("startingQuestion", onStartingQuestion);
+      }
+    };
   }, [isCreator, questions, roomId]);
+
+  useEffect(() => {
+    return () => socket.disconnect();
+  }, []);
 
   if (!isCreator)
     return (

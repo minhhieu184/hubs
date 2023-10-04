@@ -4,7 +4,7 @@ import { ReactComponent as ShareIcon } from "../icons/Share.svg";
 import PropTypes from "prop-types";
 
 export const BrowserModalButton = ({ visible, toggle }) => {
-  const title = "Browser";
+  const title = "Manabie";
 
   return (
     <ToolbarButton
