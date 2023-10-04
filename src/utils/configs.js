@@ -8,6 +8,7 @@ import { getLocale, getMessage } from "./i18n";
 // Read configs from global variable if available, otherwise use the process.env injected from build.
 const configs = {};
 let isAdmin = false;
+let isCreator = false;
 [
   "RETICULUM_SERVER",
   "THUMBNAIL_SERVER",
@@ -109,6 +110,11 @@ configs.setIsAdmin = _isAdmin => {
   isAdmin = _isAdmin;
 };
 configs.isAdmin = () => isAdmin;
+
+configs.setIsCreator = _isCreator => {
+  isCreator = _isCreator;
+};
+configs.isCreator = () => isCreator;
 
 configs.integration = integration => {
   const availableIntegrations = configs.AVAILABLE_INTEGRATIONS;

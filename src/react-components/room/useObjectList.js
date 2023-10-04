@@ -70,6 +70,7 @@ function handleDeselect(scene, object, callback) {
 
 export function ObjectListProvider({ scene, children }) {
   const [objects, setObjects] = useState([]);
+  const [isShareObject, setIsShareObject] = useState(false);
   const [focusedObject, setFocusedObject] = useState(null); // The object currently shown in the viewport
   const [selectedObject, setSelectedObject] = useState(null); // The object currently selected in the object list
   const cameraSystem = scene.systems["hubs-systems"].cameraSystem;
@@ -155,7 +156,11 @@ export function ObjectListProvider({ scene, children }) {
   );
 
   const deselectObject = useCallback(() => {
-    if (objects[0].type !== "video" || configs.isAdmin()) {
+    console.log("deselectObject");
+    const shareScreenObject = objects.find(
+      o => o.type === "video" && o.el.components["media-video"].data.contentType.endsWith("hubs-webrtc")
+    );
+    if (!shareScreenObject || configs.isCreator()) {
       handleDeselect(scene, focusedObject, setSelectedObject);
     }
   }, [scene, setSelectedObject, focusedObject, objects]);
@@ -184,6 +189,20 @@ export function ObjectListProvider({ scene, children }) {
       };
     }
   }, [objects, selectObject]);
+
+  useEffect(() => {
+    const shareScreenObject = objects.find(
+      o => o.type === "video" && o.el.components["media-video"].data.contentType.endsWith("hubs-webrtc")
+    );
+    if (shareScreenObject) {
+      setIsShareObject(true);
+    } else {
+      if (isShareObject) {
+        deselectObject();
+      }
+      setIsShareObject(false);
+    }
+  }, [objects, isShareObject, deselectObject]);
 
   const unfocusObject = useCallback(
     () => handleDeselect(scene, selectedObject, setFocusedObject),

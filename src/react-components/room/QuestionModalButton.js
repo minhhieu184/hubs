@@ -1,6 +1,6 @@
 import React from "react";
 import { ToolbarButton } from "../input/ToolbarButton";
-import { ReactComponent as ShareIcon } from "../icons/Share.svg";
+import { ReactComponent as PenIcon } from "../icons/Pen.svg";
 import PropTypes from "prop-types";
 
 export const QuestionModalButton = ({ visible, toggle, hubChannel }) => {
@@ -12,7 +12,7 @@ export const QuestionModalButton = ({ visible, toggle, hubChannel }) => {
   return (
     <ToolbarButton
       // ref={triggerRef}
-      icon={<ShareIcon />}
+      icon={<PenIcon />}
       selected={visible}
       onClick={toggle}
       label={title}

@@ -156,6 +156,7 @@ export default class HubChannel extends EventTarget {
     this.token = token;
     this._permissions = jwtDecode(token);
     configs.setIsAdmin(this._permissions.postgrest_role === "ret_admin");
+    configs.setIsCreator(this.canOrWillIfCreator("update_hub"));
     this.dispatchEvent(new CustomEvent("permissions_updated"));
 
     // Refresh the token 1 minute before it expires.

@@ -660,7 +660,7 @@ class UIRoot extends Component {
 
     this.setState({ entered: true, entering: false, showShareDialog: false });
 
-    if (configs.isAdmin()) {
+    if (configs.isCreator()) {
       this.props.store.update({ preferences: { disableMovement: false } });
     }
 
@@ -671,6 +671,10 @@ class UIRoot extends Component {
     if (this.mediaDevicesManager.isVideoShared) {
       console.log("Screen sharing enabled.");
     }
+    const shareScreenObject = this.props.scene.systems["listed-media"].els.find(el =>
+      el.components["media-video"]?.data.contentType.endsWith("hubs-webrtc")
+    );
+    if (shareScreenObject) shareScreenObject.emit("video-loaded");
   };
 
   attemptLink = async () => {

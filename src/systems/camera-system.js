@@ -435,7 +435,7 @@ export class CameraSystem {
         const shareScreenObject = scene.systems["listed-media"].els.find(el =>
           el.components["media-video"]?.data.contentType.endsWith("hubs-webrtc")
         );
-        if (!shareScreenObject || configs.isAdmin()) {
+        if (!shareScreenObject || configs.isCreator()) {
           scene.emit("uninspect");
           this.uninspect();
         }

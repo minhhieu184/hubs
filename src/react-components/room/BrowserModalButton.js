@@ -1,6 +1,6 @@
 import React from "react";
 import { ToolbarButton } from "../input/ToolbarButton";
-import { ReactComponent as ShareIcon } from "../icons/Share.svg";
+import { ReactComponent as HomeIcon } from "../icons/Home.svg";
 import PropTypes from "prop-types";
 
 export const BrowserModalButton = ({ visible, toggle }) => {
@@ -9,7 +9,7 @@ export const BrowserModalButton = ({ visible, toggle }) => {
   return (
     <ToolbarButton
       // ref={triggerRef}
-      icon={<ShareIcon />}
+      icon={<HomeIcon />}
       selected={visible}
       onClick={toggle}
       label={title}
