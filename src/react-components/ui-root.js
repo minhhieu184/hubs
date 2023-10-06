@@ -1421,7 +1421,7 @@ class UIRoot extends Component {
                         store={this.props.store}
                         hubChannel={this.props.hubChannel}
                         visible={this.state.visibleQuestion}
-                        onClose={this.toggleQuestion}
+                        toggle={this.toggleQuestion}
                       />
                     )}
                     {!this.state.dialog && renderEntryFlow ? entryDialog : undefined}
@@ -1654,7 +1654,7 @@ class UIRoot extends Component {
                           />
                         )}
                         <BrowserModalButton visible={this.state.visibleBrowser} toggle={this.toggleBrowser} />
-                        <QuestionModalButton hubChannel={this.props.hubChannel} toggle={this.toggleQuestion} />
+                        <QuestionModalButton visible={this.state.visibleQuestion} toggle={this.toggleQuestion} />
                       </>
                     )}
                     <ChatToolbarButtonContainer

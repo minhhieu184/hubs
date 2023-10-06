@@ -203,7 +203,8 @@ AnswerQuestion.propTypes = {
   roomId: PropTypes.string
 };
 
-export const QuestionModal = ({ store, hubChannel, visible, onClose }) => {
+export const QuestionModal = ({ store, hubChannel, visible, toggle }) => {
+  console.log("QuestionModal ~ visible:", visible);
   const isCreator = hubChannel.canOrWillIfCreator("update_hub");
 
   const memberId = store.state.credentials.email || store.state.profile.displayName;
@@ -222,12 +223,14 @@ export const QuestionModal = ({ store, hubChannel, visible, onClose }) => {
     function onStartQuestion(payload) {
       console.log("socket.on ~ payload:", payload);
       setAssignQuestion(payload);
+      if (!visible) toggle();
     }
     socket.on("startQuestion", onStartQuestion);
 
     function onStopQuestion(payload) {
       console.log("socket.on ~ payload:", payload);
       setAssignQuestion(null);
+      if (visible) toggle();
     }
     socket.on("stopQuestion", onStopQuestion);
 
@@ -252,7 +255,7 @@ export const QuestionModal = ({ store, hubChannel, visible, onClose }) => {
       socket.off("stopQuestion", onStopQuestion);
       isCreator && socket.off("answerQuestion", onAnswerQuestion);
     };
-  }, [roomId, isCreator]);
+  }, [roomId, isCreator, toggle, visible]);
 
   useEffect(() => {
     function onStartingQuestion() {
@@ -277,19 +280,17 @@ export const QuestionModal = ({ store, hubChannel, visible, onClose }) => {
     return () => socket.disconnect();
   }, []);
 
-  if (!isCreator)
-    return (
-      <Modal titleNode={"Question"} className={classNames(styles.questionModal, assignQuestion || styles.hide)}>
-        <AnswerQuestion assignQuestion={assignQuestion} memberId={memberId} roomId={roomId} />
-      </Modal>
-    );
   return (
     <Modal
       titleNode={"Question"}
-      beforeTitle={<CloseButton onClick={onClose} />}
+      beforeTitle={<CloseButton onClick={toggle} />}
       className={classNames(styles.questionModal, visible || styles.hide)}
     >
-      <QuestionList roomId={roomId} questions={questions} />
+      {isCreator ? (
+        <QuestionList roomId={roomId} questions={questions} />
+      ) : (
+        <AnswerQuestion assignQuestion={assignQuestion} memberId={memberId} roomId={roomId} />
+      )}
     </Modal>
   );
 };
@@ -298,5 +299,5 @@ QuestionModal.propTypes = {
   hubChannel: PropTypes.object.isRequired,
   store: PropTypes.object.isRequired,
   visible: PropTypes.bool,
-  onClose: PropTypes.func
+  toggle: PropTypes.func
 };

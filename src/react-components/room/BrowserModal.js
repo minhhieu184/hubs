@@ -8,10 +8,10 @@ export const BrowserModal = ({ visible }) => {
   return (
     <Modal className={classNames(styles.browserModal, visible || styles.hide)}>
       <iframe
-        name="browserFrame"
+        name="manabie"
         style={{ height: "100%", width: "100%" }}
         src={"https://learner.manabie.net/"}
-        title="Browser"
+        title="manabie"
       ></iframe>
     </Modal>
   );

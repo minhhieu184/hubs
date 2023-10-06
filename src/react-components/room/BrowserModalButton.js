@@ -1,6 +1,6 @@
 import React from "react";
 import { ToolbarButton } from "../input/ToolbarButton";
-import { ReactComponent as HomeIcon } from "../icons/Home.svg";
+import { ReactComponent as ManabieIcon } from "../icons/Manabie.svg";
 import PropTypes from "prop-types";
 
 export const BrowserModalButton = ({ visible, toggle }) => {
@@ -9,11 +9,11 @@ export const BrowserModalButton = ({ visible, toggle }) => {
   return (
     <ToolbarButton
       // ref={triggerRef}
-      icon={<HomeIcon />}
+      icon={<ManabieIcon />}
       selected={visible}
       onClick={toggle}
       label={title}
-      preset="accent5"
+      preset="accent1"
     />
   );
 };
