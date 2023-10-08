@@ -20,6 +20,8 @@ import { SignInButton } from "./SignInButton";
 import { AppLogo } from "../misc/AppLogo";
 import { isHmc } from "../../utils/isHmc";
 import maskEmail from "../../utils/mask-email";
+import { Box } from "./Box";
+import { QuizzList } from "./QuizzList";
 
 export function HomePage() {
   const auth = useContext(AuthContext);
@@ -184,6 +186,9 @@ export function HomePage() {
           <SocialBar />
         </Column>
       ) : null}
+      <Container style={{ flex: "1 0 auto", flexWrap: "wrap" }}>
+        <QuizzList />
+      </Container>
     </PageContainer>
   );
 }

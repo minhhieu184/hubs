@@ -1,0 +1,36 @@
+@use "../styles/theme.scss";
+
+:local(.quizz-layout) {
+}
+
+:local(.quizz-header) {
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  & > :first-child {
+    position: absolute;
+    left: 0;
+  }
+
+  & > :last-child {
+    position: absolute;
+    right: 0;
+  }
+}
+
+:local(.quizz-header-no-center) {
+  justify-content: space-between;
+
+  & > :first-child {
+    position: unset;
+    left: unset;
+  }
+
+  & > :last-child {
+    position: unset;
+    right: unset;
+  }
+}

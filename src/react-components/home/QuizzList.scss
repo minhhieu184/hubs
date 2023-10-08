@@ -1,0 +1,32 @@
+@use "../styles/theme.scss";
+
+:local(.before-header) {
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: start;
+  align-items: center;
+
+  .title {
+    margin-left: 8px;
+  }
+}
+
+:local(.center-header) {
+  width: 48px;
+
+  div {
+    width: 100%;
+    padding-top: 100%;
+    background: url("../../assets/question-mark-1.png") no-repeat center center;
+  }
+}
+
+:local(.after-header) {
+  width: 48px;
+
+  div {
+    width: 100%;
+    padding-top: 100%;
+    background: url("../../assets/question-mark-2.png") no-repeat center center;
+  }
+}

@@ -1,0 +1,59 @@
+@use "../styles/theme.scss";
+
+:local(.typography) {
+  font-family: "Inter";
+}
+
+:local(._42-size) {
+  font-size: 42px;
+}
+:local(._38-size) {
+  font-size: 38px;
+}
+:local(._28-size) {
+  font-size: 28px;
+}
+:local(._24-size) {
+  font-size: 24px;
+}
+:local(._20-size) {
+  font-size: 20px;
+}
+:local(._18-size) {
+  font-size: 18px;
+}
+:local(._16-size) {
+  font-size: 16px;
+}
+:local(._14-size) {
+  font-size: 14px;
+}
+:local(._12-size) {
+  font-size: 12px;
+}
+:local(._10-size) {
+  font-size: 10px;
+}
+
+:local(.bold-weight) {
+  font-weight: 700;
+}
+:local(.semi-bold-weight) {
+  font-weight: 600;
+}
+:local(.medium-weight) {
+  font-weight: 500;
+}
+:local(.regular-weight) {
+  font-weight: 400;
+}
+
+:local(.height-line-height) {
+  line-height: 155.556%;
+}
+:local(.medium-line-height) {
+  line-height: 150%;
+}
+:local(.regular-line-height) {
+  line-height: 120%;
+}
