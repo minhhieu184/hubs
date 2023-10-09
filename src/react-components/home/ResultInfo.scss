@@ -1,0 +1,9 @@
+@use "../styles/theme.scss";
+
+:local(.result-info) {
+  margin: 8px 0 16px;
+
+  & > :first-child {
+    margin-bottom: 8px;
+  }
+}

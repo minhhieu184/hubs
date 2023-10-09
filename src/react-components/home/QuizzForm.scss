@@ -1,0 +1,12 @@
+@use "../styles/theme.scss";
+
+:local(.result-info) {
+  text-align: center;
+  margin-top: 16px;
+}
+
+:local(.quizz-form) {
+  & > * {
+    margin-top: 24px;
+  }
+}

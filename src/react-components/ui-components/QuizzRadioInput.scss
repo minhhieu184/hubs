@@ -1,0 +1,28 @@
+@use "../styles/theme.scss";
+
+:local(.quizz-radio-input) {
+  margin-bottom: 12px;
+
+  input {
+    display: none;
+  }
+
+  label {
+    padding: 12px 16px;
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+
+    .inActive {
+      width: 16px;
+      height: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--greyscale-400, #9ca1aa);
+      background: theme.$neutral-white;
+    }
+  }
+}

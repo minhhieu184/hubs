@@ -1,0 +1,32 @@
+@use "../styles/theme.scss";
+
+:local(.student-img) {
+  width: 20px;
+
+  div {
+    width: 100%;
+    padding-top: 100%;
+    background: url("../../assets/students_1.png") no-repeat center center;
+  }
+}
+
+:local(.result-list) {
+  & > * {
+    margin-bottom: 24px;
+  }
+}
+
+:local(.result-item) {
+  & > :last-child {
+    margin-bottom: unset;
+  }
+
+  .studentList {
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}

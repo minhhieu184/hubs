@@ -2,56 +2,46 @@ import React from "react";
 import styles from "./QuizzList.scss";
 import PropTypes from "prop-types";
 // import classNames from "classnames";
-import { QuizzLayout } from "./QuizzLayout";
+import { TitleWithClose, QuizzLayout, QuestionImage } from "./QuizzLayout";
 import { FormattedMessage } from "react-intl";
-import { ReactComponent as CloseIcon } from "../icons/Close.svg";
-import { Typography } from "./Typography";
+import { Typography } from "../ui-components";
+import { Button } from "../ui-components/Button";
 
-const BeforeHeader = () => {
+const QuizzListBeforeHeader = () => {
+  return <TitleWithClose title={<FormattedMessage id="quizzList.title" defaultMessage="Question" />} />;
+};
+
+const List = ({ children }) => {
+  return <ul className={styles.list}>{children}</ul>;
+};
+
+const QuizzItem = () => {
   return (
-    <div className={styles.beforeHeader}>
-      <CloseIcon />
-      <Typography className="title" size={24} weight="semiBold">
-        <FormattedMessage id="1Question" defaultMessage="Question" />
-      </Typography>
-    </div>
+    <li className={styles.quizzItem}>
+      <Typography size={18}>1. What is your name? </Typography>
+      <div className="buttons">
+        <Button type="success" state="secondary" content="Start" />
+        <Button type="danger" state="secondary" content="Stop" />
+        <Button type="safe" state="secondary" content="Result" />
+      </div>
+    </li>
   );
 };
 
-const CenterHeader = () => {
-  return (
-    <div className={styles.centerHeader}>
-      <div></div>
-    </div>
-  );
-};
-
-const AfterHeader = () => {
-  return (
-    <div className={styles.afterHeader}>
-      <div></div>
-    </div>
-  );
+List.propTypes = {
+  children: PropTypes.node
 };
 
 export function QuizzList() {
   return (
-    <>
-      <QuizzLayout beforeHeader={<BeforeHeader />} centerHeader={<CenterHeader />} afterHeader={<AfterHeader />}>
-        123
-      </QuizzLayout>
-      <QuizzLayout centerHeader={<CenterHeader />} afterHeader={<AfterHeader />}>
-        123
-      </QuizzLayout>
-      <QuizzLayout afterHeader={<AfterHeader />}>123</QuizzLayout>
-      <QuizzLayout beforeHeader={<BeforeHeader />} afterHeader={<AfterHeader />}>
-        123
-      </QuizzLayout>
-      <QuizzLayout centerHeader={<CenterHeader />} afterHeader={<AfterHeader />}>
-        123
-      </QuizzLayout>
-      <QuizzLayout centerHeader={<CenterHeader />}>123</QuizzLayout>
-    </>
+    <QuizzLayout beforeHeader={<QuizzListBeforeHeader />} afterHeader={<QuestionImage />}>
+      <List>
+        <QuizzItem />
+        <QuizzItem />
+        <QuizzItem />
+        <QuizzItem />
+      </List>
+    </QuizzLayout>
   );
 }
 QuizzList.propTypes = {

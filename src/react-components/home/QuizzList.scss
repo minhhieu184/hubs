@@ -1,32 +1,36 @@
 @use "../styles/theme.scss";
 
-:local(.before-header) {
+:local(.list) {
+  > * {
+    margin-top: 16px;
+    padding: 4px 4px 24px 4px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  > :last-child {
+    border-bottom: unset;
+    padding-bottom: unset;
+  }
+}
+
+:local(.quizz-item) {
   display: flex;
   flex: 1 0 auto;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
+  flex-wrap: nowrap;
+  gap: 24px;
 
-  .title {
-    margin-left: 8px;
+  .buttons {
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 24px;
   }
-}
 
-:local(.center-header) {
-  width: 48px;
-
-  div {
-    width: 100%;
-    padding-top: 100%;
-    background: url("../../assets/question-mark-1.png") no-repeat center center;
-  }
-}
-
-:local(.after-header) {
-  width: 48px;
-
-  div {
-    width: 100%;
-    padding-top: 100%;
-    background: url("../../assets/question-mark-2.png") no-repeat center center;
+  button {
+    width: 116px;
   }
 }

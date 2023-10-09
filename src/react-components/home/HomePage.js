@@ -20,8 +20,9 @@ import { SignInButton } from "./SignInButton";
 import { AppLogo } from "../misc/AppLogo";
 import { isHmc } from "../../utils/isHmc";
 import maskEmail from "../../utils/mask-email";
-import { Box } from "./Box";
 import { QuizzList } from "./QuizzList";
+import { ResultList } from "./ResultList";
+import { QuizzForm } from "./QuizzForm";
 
 export function HomePage() {
   const auth = useContext(AuthContext);
@@ -188,6 +189,12 @@ export function HomePage() {
       ) : null}
       <Container style={{ flex: "1 0 auto", flexWrap: "wrap" }}>
         <QuizzList />
+      </Container>
+      <Container style={{ flex: "1 0 auto", flexWrap: "wrap" }}>
+        <ResultList />
+      </Container>
+      <Container style={{ flex: "1 0 auto", flexWrap: "wrap" }}>
+        <QuizzForm />
       </Container>
     </PageContainer>
   );
