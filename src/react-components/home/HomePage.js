@@ -20,9 +20,7 @@ import { SignInButton } from "./SignInButton";
 import { AppLogo } from "../misc/AppLogo";
 import { isHmc } from "../../utils/isHmc";
 import maskEmail from "../../utils/mask-email";
-import { QuizzList } from "./QuizzList";
-import { ResultList } from "./ResultList";
-import { QuizzForm } from "./QuizzForm";
+import { QuizzForm } from "../room/QuizzForm";
 
 export function HomePage() {
   const auth = useContext(AuthContext);
@@ -187,14 +185,21 @@ export function HomePage() {
           <SocialBar />
         </Column>
       ) : null}
-      <Container style={{ flex: "1 0 auto", flexWrap: "wrap" }}>
+      {/* <Container style={{ flex: "1 0 auto", flexWrap: "wrap" }}>
         <QuizzList />
       </Container>
       <Container style={{ flex: "1 0 auto", flexWrap: "wrap" }}>
         <ResultList />
-      </Container>
+      </Container> */}
       <Container style={{ flex: "1 0 auto", flexWrap: "wrap" }}>
-        <QuizzForm />
+        <QuizzForm
+          assignQuestion={{
+            id: 1,
+            question: "What is your name?",
+            options: ["My name is John", "My name is Peter", "My name is Mary", "My name is Jane"],
+            answers: {}
+          }}
+        />
       </Container>
     </PageContainer>
   );

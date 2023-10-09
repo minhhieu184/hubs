@@ -2,15 +2,9 @@ import React from "react";
 import styles from "./ResultList.scss";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { ResultImage, TitleWithClose, QuizzLayout } from "./QuizzLayout";
 import { FormattedMessage } from "react-intl";
-import { Typography } from "../ui-components";
+import { QuizzLayout, QuizzRadioInput, ResultImage, TitleWithClose, Typography } from "../ui-components";
 import { ResultInfo } from "./ResultInfo";
-import { QuizzRadioInput } from "../ui-components/QuizzRadioInput";
-
-const ResultListBeforeHeader = () => {
-  return <TitleWithClose title={<FormattedMessage id="resultList.title" defaultMessage="Result" />} />;
-};
 
 const StudentImage = () => {
   return (
@@ -51,15 +45,19 @@ ResultItem.propTypes = {
   index: PropTypes.number
 };
 
-export function ResultList({ children, className, ...rest }) {
-  const question = (
+export function ResultList({ question, index, total, onClose }) {
+  const questionComponent = (
     <Typography size={18} weight="medium">
-      <FormattedMessage id="resultList.question" defaultMessage="What is your name?" />
+      {question.question}
     </Typography>
   );
+  const beforeHeader = (
+    <TitleWithClose onClose={onClose} title={<FormattedMessage id="resultList.title" defaultMessage="Result" />} />
+  );
+
   return (
-    <QuizzLayout beforeHeader={<ResultListBeforeHeader />} afterHeader={<ResultImage />}>
-      <ResultInfo index={1} total={10} question={question} />
+    <QuizzLayout beforeHeader={beforeHeader} afterHeader={<ResultImage />}>
+      <ResultInfo index={index} total={total} question={questionComponent} />
       <div className={styles.resultList}>
         <ResultItem id="1" index={0} />
         <ResultItem id="2" index={1} />
@@ -70,6 +68,8 @@ export function ResultList({ children, className, ...rest }) {
   );
 }
 ResultList.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string
+  question: PropTypes.object,
+  index: PropTypes.number,
+  total: PropTypes.number,
+  onClose: PropTypes.func
 };

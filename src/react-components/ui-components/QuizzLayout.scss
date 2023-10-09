@@ -44,6 +44,10 @@
   .title {
     margin-left: 8px;
   }
+
+  svg {
+    cursor: pointer;
+  }
 }
 
 :local(.question-img) {

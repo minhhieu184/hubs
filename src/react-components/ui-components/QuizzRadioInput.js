@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styles from "./QuizzRadioInput.scss";
 import PropTypes from "prop-types";
 import classNames from "classnames";
@@ -7,10 +7,11 @@ import { Typography } from "./Typography";
 
 const answerNames = ["A", "B", "C", "D"];
 
-export const QuizzRadioInput = ({ index, id, label, active, disable = false, className, ...rest }) => {
+export const QuizzRadioInput = forwardRef(({ index, id, label, active, disable = false, className, ...rest }, ref) => {
+  console.log("QuizzRadioInput ~ active:", active);
   return (
-    <div className={classNames(styles.quizzRadioInput, className)} {...rest}>
-      <input id={id} type="radio" {...rest} />
+    <div className={classNames(styles.quizzRadioInput, className)}>
+      <input ref={ref} id={id} type="radio" {...rest} />
       <label htmlFor={id}>
         {disable ? null : active ? <RadioActive /> : <div className="inActive" />}
         <Typography>{answerNames[index]}</Typography>
@@ -18,7 +19,7 @@ export const QuizzRadioInput = ({ index, id, label, active, disable = false, cla
       </label>
     </div>
   );
-};
+});
 QuizzRadioInput.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string,
@@ -27,3 +28,4 @@ QuizzRadioInput.propTypes = {
   disable: PropTypes.bool,
   className: PropTypes.string
 };
+QuizzRadioInput.displayName = "QuizzRadioInput";

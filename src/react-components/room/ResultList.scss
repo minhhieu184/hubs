@@ -14,14 +14,15 @@
   & > * {
     margin-bottom: 24px;
   }
-}
 
-:local(.result-item) {
   & > :last-child {
     margin-bottom: unset;
   }
+}
 
+:local(.result-item) {
   .studentList {
+    margin-top: 12px;
     display: flex;
     flex: 1 0 auto;
     justify-content: flex-start;

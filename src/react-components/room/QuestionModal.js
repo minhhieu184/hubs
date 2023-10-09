@@ -10,6 +10,8 @@ import { useForm } from "react-hook-form";
 import { socket } from "../socket";
 import { FormattedMessage } from "react-intl";
 import { BackButton } from "../input/BackButton";
+import { QuizzList } from "./QuizzList";
+import { QuizzForm } from "./QuizzForm";
 
 // 5 english questions
 const _questions = [
@@ -282,14 +284,16 @@ export const QuestionModal = ({ store, hubChannel, visible, toggle }) => {
 
   return (
     <Modal
-      titleNode={"Question"}
-      beforeTitle={<CloseButton onClick={toggle} />}
+      // titleNode={"Question"}
+      // beforeTitle={<CloseButton onClick={toggle} />}
       className={classNames(styles.questionModal, visible || styles.hide)}
     >
       {isCreator ? (
-        <QuestionList roomId={roomId} questions={questions} />
+        // <QuestionList roomId={roomId} questions={questions} />
+        <QuizzList roomId={roomId} questions={questions} onClose={toggle} />
       ) : (
-        <AnswerQuestion assignQuestion={assignQuestion} memberId={memberId} roomId={roomId} />
+        // <AnswerQuestion assignQuestion={assignQuestion} memberId={memberId} roomId={roomId} />
+        <QuizzForm assignQuestion={assignQuestion} memberId={memberId} roomId={roomId} qu />
       )}
     </Modal>
   );
