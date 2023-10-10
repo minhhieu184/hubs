@@ -20,7 +20,6 @@ import { SignInButton } from "./SignInButton";
 import { AppLogo } from "../misc/AppLogo";
 import { isHmc } from "../../utils/isHmc";
 import maskEmail from "../../utils/mask-email";
-import { QuizzForm } from "../room/QuizzForm";
 
 export function HomePage() {
   const auth = useContext(AuthContext);
@@ -191,7 +190,7 @@ export function HomePage() {
       <Container style={{ flex: "1 0 auto", flexWrap: "wrap" }}>
         <ResultList />
       </Container> */}
-      <Container style={{ flex: "1 0 auto", flexWrap: "wrap" }}>
+      {/* <Container style={{ flex: "1 0 auto", flexWrap: "wrap" }}>
         <QuizzForm
           assignQuestion={{
             id: 1,
@@ -200,7 +199,7 @@ export function HomePage() {
             answers: {}
           }}
         />
-      </Container>
+      </Container> */}
     </PageContainer>
   );
 }

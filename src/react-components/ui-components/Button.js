@@ -7,7 +7,7 @@ import { Typography } from "./Typography";
 export function Button({
   content,
   className,
-  type = "primary",
+  variant = "primary",
   state = "default",
   icon: Icon,
   iconPosition = "before",
@@ -17,7 +17,7 @@ export function Button({
   const _className = classNames(
     styles.button,
     {
-      [styles[`${type}-${state}`]]: true,
+      [styles[`${variant}-${state}`]]: true,
       [styles.iconButton]: !!Icon
     },
     className
@@ -34,7 +34,7 @@ export function Button({
 Button.propTypes = {
   content: PropTypes.string.isRequired,
   className: PropTypes.string,
-  type: PropTypes.oneOf(["primary", "secondary", "success", "warning", "safe", "danger", "tertiary"]),
+  variant: PropTypes.oneOf(["primary", "secondary", "success", "warning", "safe", "danger", "tertiary"]),
   state: PropTypes.oneOf(["default", "secondary", "hover", "active", "selected", "disabled"]),
   icon: PropTypes.node,
   iconPosition: PropTypes.oneOf(["before", "after"]),

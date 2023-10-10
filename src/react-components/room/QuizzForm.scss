@@ -17,3 +17,19 @@
     display: block;
   }
 }
+
+:local(.error-message) {
+  color: theme.$red-500;
+}
+
+:local(.no-question) {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+
+  div {
+    width: 100%;
+    padding-top: 100%;
+    background: url("../../assets/no_question.png") center center / cover no-repeat;
+  }
+}

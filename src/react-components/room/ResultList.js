@@ -1,7 +1,6 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styles from "./ResultList.scss";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 import { FormattedMessage } from "react-intl";
 import { QuizzLayout, QuizzRadioInput, ResultImage, TitleWithClose, Typography } from "../ui-components";
 import { ResultInfo } from "./ResultInfo";
@@ -13,36 +12,28 @@ const StudentImage = () => {
     </div>
   );
 };
-const StudentName = () => {
-  const students = ["Liam", "Harper", "Ensd"];
-  return (
-    <>
-      {students.map(student => (
-        <>
-          <span>-</span>
-          <Typography>{student}</Typography>
-        </>
-      ))}
-    </>
-  );
-};
 
-const ResultItem = ({ id, index }) => {
-  const t = "I am 10 years old";
-
+const ResultItem = ({ id, index, label, students }) => {
   return (
     <div className={styles.resultItem}>
-      <QuizzRadioInput disable={true} index={index} id={id} name="r" label={t} />
+      <QuizzRadioInput disable={true} index={index} id={id} name="r" label={label} />
       <div className="studentList">
         <StudentImage />
-        <StudentName />
+        {students?.map(student => (
+          <Fragment key={student}>
+            <span>-</span>
+            <Typography>{student}</Typography>
+          </Fragment>
+        )) || null}
       </div>
     </div>
   );
 };
 ResultItem.propTypes = {
   id: PropTypes.string,
-  index: PropTypes.number
+  index: PropTypes.number,
+  label: PropTypes.string,
+  students: PropTypes.array
 };
 
 export function ResultList({ question, index, total, onClose }) {
@@ -55,14 +46,21 @@ export function ResultList({ question, index, total, onClose }) {
     <TitleWithClose onClose={onClose} title={<FormattedMessage id="resultList.title" defaultMessage="Result" />} />
   );
 
+  const students = {};
+  for (const student in question.answers) {
+    const answer = question.answers[student];
+    if (!students[answer]) students[answer] = [student];
+    else students[answer].push(student);
+  }
+  console.log("ResultList ~ students:", students);
+
   return (
     <QuizzLayout beforeHeader={beforeHeader} afterHeader={<ResultImage />}>
       <ResultInfo index={index} total={total} question={questionComponent} />
       <div className={styles.resultList}>
-        <ResultItem id="1" index={0} />
-        <ResultItem id="2" index={1} />
-        <ResultItem id="3" index={2} />
-        <ResultItem id="4" index={3} />
+        {question.options.map((option, index) => (
+          <ResultItem key={option} id={option} index={index} label={option} students={students[index]} />
+        ))}
       </div>
     </QuizzLayout>
   );

@@ -1,51 +1,81 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./QuizzForm.scss";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 import { Button, QuestionImage, QuizzLayout, QuizzRadioInput } from "../ui-components";
 import { Typography } from "../ui-components";
 import { FormattedMessage } from "react-intl";
 import { ResultInfo } from "./ResultInfo";
 import { useForm } from "react-hook-form";
+import { socket } from "../socket";
+
+const NoQuestion = () => {
+  return (
+    <div className={styles.noQuestion}>
+      <div></div>
+    </div>
+  );
+};
 
 export const QuizzForm = ({ assignQuestion, roomId, memberId }) => {
-  const { register, watch, handleSubmit } = useForm();
+  console.log("QuizzForm ~ assignQuestion:", assignQuestion);
+  const {
+    register,
+    watch,
+    handleSubmit,
+    setValue,
+    formState: { errors }
+  } = useForm({
+    defaultValues: { answer: null }
+  });
   const currentAnswer = watch("answer");
-  console.log("QuizzForm ~ currentAnswer:", currentAnswer);
 
   const onSubmit = data => {
     console.log("onSubmit ~ data:", data);
-    // console.log("AnswerQuestion ~ memberId:", memberId);
-    // socket.emit("answerQuestion", { ...assignQuestion, answers: { [memberId]: data.answer }, roomId });
-    // setCurrentAnswer(data.answer);
+    console.log("AnswerQuestion ~ memberId:", memberId);
+    // socket.emit("answerQuestion", { ...assignQuestion, answer: data.answer, memberId, roomId });
+    socket.emit("answerQuestion", { ...assignQuestion, answers: { [memberId]: data.answer }, roomId });
   };
 
-  if (!assignQuestion) return null;
+  useEffect(() => {
+    setValue("answer", assignQuestion?.answers[memberId] || null);
+  }, [assignQuestion, setValue, memberId]);
 
   const question = (
     <Typography size={24} weight="semiBold">
-      <FormattedMessage id="resultList.question" defaultMessage="What is your name?" />
+      {assignQuestion?.question}
+    </Typography>
+  );
+  const errorMessages = (
+    <Typography size={14} className={styles.errorMessage}>
+      <FormattedMessage id="errorMsg" defaultMessage="Please select an answer" />
     </Typography>
   );
 
   return (
     <QuizzLayout centerHeader={<QuestionImage />}>
-      <ResultInfo index={1} total={10} question={question} className={styles.resultInfo} />
-      <form className={styles.quizzForm}>
-        {assignQuestion.options.map((option, index) => (
-          <QuizzRadioInput
-            key={option}
-            ref={register}
-            active={currentAnswer == index}
-            index={index}
-            id={index}
-            name="answer"
-            label={option}
-            value={index}
-          />
-        ))}
-        <Button content="Submit" type="safe" state="default" />
-      </form>
+      {assignQuestion ? (
+        <>
+          <ResultInfo index={1} total={10} question={question} className={styles.resultInfo} />
+          {errors.answer && errorMessages}
+          <form className={styles.quizzForm}>
+            {assignQuestion.options.map((option, index) => (
+              <QuizzRadioInput
+                key={option}
+                ref={register({ required: true })}
+                active={currentAnswer == index}
+                index={index}
+                id={index + ""}
+                name="answer"
+                label={option}
+                value={index}
+              />
+            ))}
+            <Button onClick={handleSubmit(onSubmit)} content="Submit" variant="safe" type="submit" />
+          </form>
+        </>
+      ) : (
+        <NoQuestion />
+      )}
     </QuizzLayout>
   );
 };

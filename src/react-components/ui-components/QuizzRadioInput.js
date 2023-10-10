@@ -8,7 +8,6 @@ import { Typography } from "./Typography";
 const answerNames = ["A", "B", "C", "D"];
 
 export const QuizzRadioInput = forwardRef(({ index, id, label, active, disable = false, className, ...rest }, ref) => {
-  console.log("QuizzRadioInput ~ active:", active);
   return (
     <div className={classNames(styles.quizzRadioInput, className)}>
       <input ref={ref} id={id} type="radio" {...rest} />

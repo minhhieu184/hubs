@@ -17,25 +17,38 @@
   }
 }
 
+@mixin buttonState($hover-bg-color, $active-bg-color, $focus-bg-color) {
+  &:hover {
+    background-color: $hover-bg-color;
+    border: unset;
+    color: theme.$neutral-white;
+  }
+  &:active {
+    background-color: $active-bg-color;
+    border: unset;
+    color: theme.$neutral-white;
+  }
+  &:focus {
+    background-color: $focus-bg-color;
+    border: unset;
+    color: theme.$neutral-white;
+  }
+}
+
 /**
  * Primary button
  */
 :local(.primary-default) {
   background-color: theme.$brand-500;
+
+  @include buttonState(theme.$brand-400, theme.$brand-600, theme.$brand-700);
 }
 :local(.primary-secondary) {
+  @extend :local(.primary-default);
+
   color: theme.$brand-500;
   background-color: theme.$neutral-white;
   border: 1px solid theme.$brand-500;
-}
-:local(.primary-hover) {
-  background-color: theme.$brand-400;
-}
-:local(.primary-active) {
-  background-color: theme.$brand-600;
-}
-:local(.primary-selected) {
-  background-color: theme.$brand-700;
 }
 :local(.primary-disabled) {
   background-color: theme.$neutral-200;
@@ -48,17 +61,18 @@
 :local(.secondary-default) {
   color: theme.$brand-900;
   background-color: theme.$brand-100;
-}
-:local(.secondary-hover) {
-  color: theme.$brand-900;
-  background-color: theme.$brand-200;
-}
-:local(.secondary-active) {
-  color: theme.$brand-900;
-  background-color: theme.$brand-300;
-}
-:local(.secondary-selected) {
-  background-color: theme.$brand-600;
+
+  :hover {
+    color: theme.$brand-900;
+    background-color: theme.$brand-200;
+  }
+  :active {
+    color: theme.$brand-900;
+    background-color: theme.$brand-300;
+  }
+  :focus {
+    background-color: theme.$brand-600;
+  }
 }
 :local(.secondary-disabled) {
   background-color: theme.$neutral-200;
@@ -70,20 +84,15 @@
  */
 :local(.success-default) {
   background-color: theme.$green-600;
+
+  @include buttonState(theme.$green-500, theme.$green-700, theme.$green-800);
 }
 :local(.success-secondary) {
+  @extend :local(.success-default);
+
   color: theme.$green-600;
   background-color: theme.$neutral-white;
   border: 1px solid theme.$green-600;
-}
-:local(.success-hover) {
-  background-color: theme.$green-500;
-}
-:local(.success-active) {
-  background-color: theme.$green-700;
-}
-:local(.success-selected) {
-  background-color: theme.$green-800;
 }
 :local(.success-disabled) {
   background-color: theme.$neutral-200;
@@ -95,20 +104,15 @@
  */
 :local(.warning-default) {
   background-color: theme.$yellow-600;
+
+  @include buttonState(theme.$yellow-500, theme.$yellow-700, theme.$yellow-800);
 }
 :local(.warning-secondary) {
+  @extend :local(.warning-default);
+
   color: theme.$yellow-600;
   background-color: theme.$neutral-white;
   border: 1px solid theme.$yellow-600;
-}
-:local(.warning-hover) {
-  background-color: theme.$yellow-500;
-}
-:local(.warning-active) {
-  background-color: theme.$yellow-700;
-}
-:local(.warning-selected) {
-  background-color: theme.$yellow-800;
 }
 :local(.warning-disabled) {
   background-color: theme.$neutral-200;
@@ -120,20 +124,15 @@
  */
 :local(.safe-default) {
   background-color: theme.$blue-600;
+
+  @include buttonState(theme.$blue-500, theme.$blue-700, theme.$blue-800);
 }
 :local(.safe-secondary) {
+  @extend :local(.safe-default);
+
   color: theme.$blue-600;
   background-color: theme.$neutral-white;
   border: 1px solid theme.$blue-600;
-}
-:local(.safe-hover) {
-  background-color: theme.$blue-500;
-}
-:local(.safe-active) {
-  background-color: theme.$blue-700;
-}
-:local(.safe-selected) {
-  background-color: theme.$blue-800;
 }
 :local(.safe-disabled) {
   background-color: theme.$neutral-200;
@@ -145,20 +144,15 @@
  */
 :local(.danger-default) {
   background-color: theme.$red-600;
+
+  @include buttonState(theme.$red-500, theme.$red-700, theme.$red-800);
 }
 :local(.danger-secondary) {
+  @extend :local(.danger-default);
+
   color: theme.$red-600;
   background-color: theme.$neutral-white;
   border: 1px solid theme.$red-600;
-}
-:local(.danger-hover) {
-  background-color: theme.$red-500;
-}
-:local(.danger-active) {
-  background-color: theme.$red-700;
-}
-:local(.danger-selected) {
-  background-color: theme.$red-800;
 }
 :local(.danger-disabled) {
   background-color: theme.$neutral-200;
@@ -171,17 +165,18 @@
 :local(.tertiary-default) {
   color: theme.$brand-500;
   background-color: theme.$neutral-white;
-}
-:local(.tertiary-hover) {
-  color: theme.$brand-500;
-  background-color: theme.$neutral-200;
-}
-:local(.tertiary-active) {
-  color: theme.$brand-500;
-  background-color: theme.$brand-100;
-}
-:local(.tertiary-selected) {
-  background-color: theme.$brand-800;
+
+  :hover {
+    color: theme.$brand-500;
+    background-color: theme.$neutral-200;
+  }
+  :active {
+    color: theme.$brand-500;
+    background-color: theme.$brand-100;
+  }
+  :focus {
+    background-color: theme.$brand-800;
+  }
 }
 :local(.tertiary-disabled) {
   background-color: theme.$neutral-200;

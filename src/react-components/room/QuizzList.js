@@ -7,6 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { Typography } from "../ui-components";
 import { Button } from "../ui-components/Button";
 import { ResultList } from "./ResultList";
+import { socket } from "../socket";
 
 const QuizzListBeforeHeader = ({ onClose }) => {
   return (
@@ -24,14 +25,14 @@ List.propTypes = {
   children: PropTypes.node
 };
 
-const QuizzItem = ({ index, question, showResult }) => {
+const QuizzItem = ({ index, question, showResult, startQuestion, stopQuestion }) => {
   return (
     <li className={styles.quizzItem}>
       <Typography size={18}>{`${index + 1}. ${question.question}`}</Typography>
       <div className="buttons">
-        <Button type="success" state="secondary" content="Start" />
-        <Button type="danger" state="secondary" content="Stop" />
-        <Button type="safe" state="secondary" content="Result" onClick={showResult} />
+        <Button variant="success" state="secondary" content="Start" onClick={startQuestion} />
+        <Button variant="danger" state="secondary" content="Stop" onClick={stopQuestion} />
+        <Button variant="safe" state="secondary" content="Result" onClick={showResult} />
       </div>
     </li>
   );
@@ -39,7 +40,9 @@ const QuizzItem = ({ index, question, showResult }) => {
 QuizzItem.propTypes = {
   question: PropTypes.object,
   index: PropTypes.number,
-  showResult: PropTypes.func
+  showResult: PropTypes.func,
+  startQuestion: PropTypes.func,
+  stopQuestion: PropTypes.func
 };
 
 export function QuizzList({ roomId, questions, onClose }) {
@@ -69,7 +72,20 @@ export function QuizzList({ roomId, questions, onClose }) {
     <QuizzLayout beforeHeader={beforeHeader} afterHeader={<QuestionImage />}>
       <List>
         {questions.map((question, index) => (
-          <QuizzItem key={question.id} index={index} question={question} showResult={() => setSelectedResult(index)} />
+          <QuizzItem
+            key={question.id}
+            index={index}
+            question={question}
+            showResult={() => setSelectedResult(index)}
+            startQuestion={() => {
+              socket.emit("startQuestion", { ...question, roomId });
+              localStorage.setItem("assignQuestionId", JSON.stringify(question.id));
+            }}
+            stopQuestion={() => {
+              socket.emit("stopQuestion", { ...question, roomId });
+              localStorage.removeItem("assignQuestionId");
+            }}
+          />
         ))}
       </List>
     </QuizzLayout>
